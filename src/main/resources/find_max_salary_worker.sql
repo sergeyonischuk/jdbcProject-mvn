@@ -1,0 +1,1 @@
+SELECT * FROM worker WHERE salary_month = (SELECT MAX(salary_month) FROM worker);
