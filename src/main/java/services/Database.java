@@ -13,7 +13,6 @@ public class Database {
         String login = "postgres";
         String password = "3nyn56";
         try {
-//            Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection(dbUrl, login, password);
         } catch (SQLException throwables) {
             throwables.printStackTrace();

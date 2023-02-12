@@ -8,10 +8,7 @@ import entity.Worker;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +20,9 @@ public class DatabaseQueryService {
     public List<Worker> getMaxSalaryWorkers() throws SQLException, IOException {
         List<Worker> workers = new ArrayList<>();
         Connection connection = Database.getConnection();
-        Statement st = connection.createStatement();
-
         String content = readFile("src/main/resources/find_max_salary_worker.sql");
-        ResultSet rs = st.executeQuery(content);
+        PreparedStatement st = connection.prepareStatement(content);
+        ResultSet rs = st.executeQuery();
 
         while (rs.next()) {
             int id = rs.getInt("worker_id");
@@ -44,10 +40,9 @@ public class DatabaseQueryService {
     public List<Worker> getYoungestAndOldestWorkers() throws SQLException, IOException {
         List<Worker> workers = new ArrayList<>();
         Connection connection = Database.getConnection();
-        Statement st = connection.createStatement();
-
         String content = readFile("src/main/resources/find_youngest_eldest_workers.sql");
-        ResultSet rs = st.executeQuery(content);
+        PreparedStatement st = connection.prepareStatement(content);
+        ResultSet rs = st.executeQuery();
 
         while (rs.next()) {
             String name = rs.getString("name");
@@ -63,10 +58,9 @@ public class DatabaseQueryService {
 
     public Client getClientWithMaxCountOfProjects() throws SQLException, IOException {
         Connection connection = Database.getConnection();
-        Statement st = connection.createStatement();
-
         String content = readFile("src/main/resources/find_max_projects_client.sql");
-        ResultSet rs = st.executeQuery(content);
+        PreparedStatement st = connection.prepareStatement(content);
+        ResultSet rs = st.executeQuery();
 
         Client client = null;
 
@@ -81,10 +75,10 @@ public class DatabaseQueryService {
 
     public List<LongestProject> getLongestProjects() throws SQLException, IOException {
         Connection connection = Database.getConnection();
-        Statement st = connection.createStatement();
-
         String content = readFile("src/main/resources/find_longest_project.sql");
-        ResultSet rs = st.executeQuery(content);
+
+        PreparedStatement st = connection.prepareStatement(content);
+        ResultSet rs = st.executeQuery();
 
         List<LongestProject> longestProjects = new ArrayList<>();
 
@@ -99,10 +93,10 @@ public class DatabaseQueryService {
 
     public List<ProjectPrice> getProjectPrices() throws SQLException, IOException {
         Connection connection = Database.getConnection();
-        Statement st = connection.createStatement();
-
         String content = readFile("src/main/resources/print_project_prices.sql");
-        ResultSet rs = st.executeQuery(content);
+
+        PreparedStatement st = connection.prepareStatement(content);
+        ResultSet rs = st.executeQuery();
         List<ProjectPrice> projectPrices = new ArrayList<>();
 
         while (rs.next()) {
