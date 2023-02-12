@@ -1,15 +1,23 @@
 package entity;
 
 public class Client {
+    private long id;
     private String name;
-    private int countOfProjects;
 
     public Client() {
     }
 
-    public Client(String name, int countOfProjects) {
+    public Client(long id, String name) {
+        this.id = id;
         this.name = name;
-        this.countOfProjects = countOfProjects;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -20,19 +28,11 @@ public class Client {
         this.name = name;
     }
 
-    public int getCountOfProjects() {
-        return countOfProjects;
-    }
-
-    public void setCountOfProjects(int countOfProjects) {
-        this.countOfProjects = countOfProjects;
-    }
-
     @Override
     public String toString() {
         return "Client{" +
-                "name='" + name + '\'' +
-                ", countOfProjects=" + countOfProjects +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 '}';
     }
 }

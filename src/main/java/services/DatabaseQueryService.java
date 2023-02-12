@@ -1,6 +1,6 @@
 package services;
 
-import entity.Client;
+import entity.ClientAndProject;
 import entity.LongestProject;
 import entity.ProjectPrice;
 import entity.Worker;
@@ -19,7 +19,7 @@ public class DatabaseQueryService {
 
     public List<Worker> getMaxSalaryWorkers() throws SQLException, IOException {
         List<Worker> workers = new ArrayList<>();
-        Connection connection = Database.getConnection();
+        Connection connection = DatabaseConnection.getConnection();
         String content = readFile("src/main/resources/find_max_salary_worker.sql");
         PreparedStatement st = connection.prepareStatement(content);
         ResultSet rs = st.executeQuery();
@@ -39,7 +39,7 @@ public class DatabaseQueryService {
 
     public List<Worker> getYoungestAndOldestWorkers() throws SQLException, IOException {
         List<Worker> workers = new ArrayList<>();
-        Connection connection = Database.getConnection();
+        Connection connection = DatabaseConnection.getConnection();
         String content = readFile("src/main/resources/find_youngest_eldest_workers.sql");
         PreparedStatement st = connection.prepareStatement(content);
         ResultSet rs = st.executeQuery();
@@ -56,25 +56,25 @@ public class DatabaseQueryService {
         return workers;
     }
 
-    public Client getClientWithMaxCountOfProjects() throws SQLException, IOException {
-        Connection connection = Database.getConnection();
+    public ClientAndProject getClientWithMaxCountOfProjects() throws SQLException, IOException {
+        Connection connection = DatabaseConnection.getConnection();
         String content = readFile("src/main/resources/find_max_projects_client.sql");
         PreparedStatement st = connection.prepareStatement(content);
         ResultSet rs = st.executeQuery();
 
-        Client client = null;
+        ClientAndProject clientAndProject = null;
 
         while (rs.next()) {
             String name = rs.getString("name");
             int count = rs.getInt("project_count");
-            client = new Client(name, count);
+            clientAndProject = new ClientAndProject(name, count);
         }
         st.close();
-        return client;
+        return clientAndProject;
     }
 
     public List<LongestProject> getLongestProjects() throws SQLException, IOException {
-        Connection connection = Database.getConnection();
+        Connection connection = DatabaseConnection.getConnection();
         String content = readFile("src/main/resources/find_longest_project.sql");
 
         PreparedStatement st = connection.prepareStatement(content);
@@ -92,7 +92,7 @@ public class DatabaseQueryService {
     }
 
     public List<ProjectPrice> getProjectPrices() throws SQLException, IOException {
-        Connection connection = Database.getConnection();
+        Connection connection = DatabaseConnection.getConnection();
         String content = readFile("src/main/resources/print_project_prices.sql");
 
         PreparedStatement st = connection.prepareStatement(content);
