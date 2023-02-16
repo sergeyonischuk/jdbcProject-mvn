@@ -1,4 +1,4 @@
-INSERT INTO WORKER("name", birthday, "level", salary) VALUES ('Volodymyr', '1996-04-12', 'TRAINEE', 500),
+INSERT INTO WORKER("name", birthday, "level", salary_month) VALUES ('Volodymyr', '1996-04-12', 'TRAINEE', 500),
                                                                    ('Andrii', '1979.05.21', 'SENIOR', 6000),
                                                                    ('Valerii', '1998.07.01', 'MIDDLE', 1600),
                                                                    ('Serhii', '1992.02.18', 'JUNIOR', 700),

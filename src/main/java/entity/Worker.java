@@ -6,17 +6,24 @@ public class Worker {
     private int id;
     private String name;
     private LocalDate birthday;
-    private String lvl;
+    private Level level;
     private int salaryMonth;
 
     public Worker() {
     }
 
-    public Worker(int id, String name, LocalDate birthday, String lvl, int salaryMonth) {
+    public Worker(String name, LocalDate birthday, Level level, int salaryMonth) {
+        this.name = name;
+        this.birthday = birthday;
+        this.level = level;
+        this.salaryMonth = salaryMonth;
+    }
+
+    public Worker(int id, String name, LocalDate birthday, Level level, int salaryMonth) {
         this.id = id;
         this.name = name;
         this.birthday = birthday;
-        this.lvl = lvl;
+        this.level = level;
         this.salaryMonth = salaryMonth;
     }
 
@@ -44,12 +51,12 @@ public class Worker {
         this.birthday = birthday;
     }
 
-    public String getLvl() {
-        return lvl;
+    public Level getLevel() {
+        return level;
     }
 
-    public void setLvl(String lvl) {
-        this.lvl = lvl;
+    public void setLevel(Level level) {
+        this.level = level;
     }
 
     public int getSalaryMonth() {
@@ -62,11 +69,11 @@ public class Worker {
 
     @Override
     public String toString() {
-        return "Entity.Worker{" +
+        return "Worker{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", birthday=" + birthday +
-                ", lvl='" + lvl + '\'' +
+                ", level=" + level +
                 ", salaryMonth=" + salaryMonth +
                 '}';
     }

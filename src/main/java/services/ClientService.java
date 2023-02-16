@@ -13,7 +13,7 @@ public class ClientService {
 
     public String getById(long id) throws SQLException {
         if (validateInputId(id)) {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = DataSource.getConnection();
             PreparedStatement st = con.prepareStatement("SELECT * FROM client WHERE client_id = ?");
             st.setLong(1, id);
 
@@ -26,6 +26,7 @@ public class ClientService {
             if (client.getName() != null) {
                 return client.getName();
             }
+            rs.close();
         }
         throw new IllegalArgumentException("illegal id");
 
@@ -33,7 +34,7 @@ public class ClientService {
 
     public void setName(long id, String name) throws SQLException {
         if (validateInputId(id) && validateInputName(name)) {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = DataSource.getConnection();
             PreparedStatement st = con.prepareStatement("UPDATE client SET name = ? WHERE client_id = ?");
             st.setLong(2, id);
             st.setString(1, name);
@@ -44,7 +45,7 @@ public class ClientService {
 
     public long create(String name) throws SQLException {
         if (validateInputName(name)) {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = DataSource.getConnection();
             PreparedStatement st = con.prepareStatement("INSERT INTO client (name) VALUES (?)");
             st.setString(1, name);
             st.executeUpdate();
@@ -55,7 +56,7 @@ public class ClientService {
     }
 
     public List<Client> listAll() throws SQLException {
-        Connection connection = DatabaseConnection.getConnection();
+        Connection connection = DataSource.getConnection();
         PreparedStatement st = connection.prepareStatement("SELECT * FROM client");
         ResultSet rs = st.executeQuery();
 
@@ -66,12 +67,13 @@ public class ClientService {
             String name = rs.getString("name");
             result.add(new Client(id, name));
         }
+        rs.close();
         return result;
     }
 
     public void deleteById(long id) throws SQLException {
         if (validateInputId(id)) {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = DataSource.getConnection();
             PreparedStatement st = con.prepareStatement("DELETE FROM client WHERE client_id = ?");
             st.setLong(1, id);
             st.executeUpdate();
@@ -81,13 +83,14 @@ public class ClientService {
 
     private long getIdByName(String name) throws SQLException {
         if (validateInputName(name)) {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = DataSource.getConnection();
             PreparedStatement st = con.prepareStatement("SELECT * FROM client WHERE name = ?");
             st.setString(1, name);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 return rs.getLong("client_id");
             }
+            rs.close();
         }
         throw new IllegalArgumentException("client with name " + name + " not found");
     }

@@ -4,9 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DatabaseConnection {
+public class DataSource {
     private static Connection con = null;
-    private static DatabaseConnection instance;
+    private static DataSource instance;
 
     static {
         String dbUrl = "jdbc:postgresql://localhost/company";
@@ -23,11 +23,11 @@ public class DatabaseConnection {
         return con;
     }
 
-    public static DatabaseConnection getInstance() throws SQLException {
+    public static DataSource getInstance() throws SQLException {
         if (instance == null) {
-            instance = new DatabaseConnection();
+            instance = new DataSource();
         } else if (instance.getConnection().isClosed()) {
-            instance = new DatabaseConnection();
+            instance = new DataSource();
         }
 
         return instance;
