@@ -1,23 +1,23 @@
 CREATE TYPE LVL AS ENUM('TRAINEE', 'JUNIOR', 'MIDDLE', 'SENIOR');
-CREATE TABLE WORKER (
+CREATE TABLE IF NOT EXISTS WORKER (
                         WORKER_ID SERIAL PRIMARY KEY NOT NULL,
                         name VARCHAR(100) CHECK (length(name) >= 2 AND length(name) <= 1000) NOT NULL,
                         birthday date CHECK (birthday > '1900-01-01'),
                         level lvl,
                         salary_month INT CHECK (salary_month >= 100 AND salary_month <= 100000));
 
-CREATE TABLE CLIENT(
+CREATE TABLE  IF NOT EXISTS CLIENT(
                        CLIENT_ID SERIAL PRIMARY KEY NOT NULL,
                        name VARCHAR(1000) NOT NULL CHECK (length(name) >= 2 AND length(name) <= 1000));
 
-CREATE TABLE PROJECT(
+CREATE TABLE  IF NOT EXISTS PROJECT(
                         PROJECT_ID SERIAL PRIMARY KEY NOT NULL,
                         client_id INT,
                         start_date date,
                         finish_date date,
-                        FOREIGN KEY(client_id) REFERENCES clientAndProject(CLIENT_ID));
+                        FOREIGN KEY(client_id) REFERENCES client(CLIENT_ID));
 
-CREATE TABLE PROJECT_WORKER(
+CREATE TABLE  IF NOT EXISTS PROJECT_WORKER(
                                project_id INT,
                                worker_id INT,
                                PRIMARY KEY (project_id, worker_id),
